@@ -29,8 +29,6 @@ const unsubscribe =store.subscribe(() => {
     console.log(store.getState());
 });
 
-
-
 //How to increment the count 
 //Actions ! object to get sent to the store
 //increment, decrement,reset
