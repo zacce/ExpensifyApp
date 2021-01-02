@@ -1,17 +1,37 @@
 import { createStore } from 'redux';
 
-const store = createStore(( state = { count:0}, action) => {
+//Action generators - functions that return action objects
+
+const incrementCount = ({ incrementBy = 1 } = {}) => ({
+    type:'INCREMENT',
+    incrementBy
+});
+
+const decrementCount = ({decrementBy = 1 } = {}) => ({
+    type:'DECREMENT',
+    decrementBy
+});
+
+const resetCount = () => ({
+    type:'RESET',
+    resetCount
+})
+
+const setCount = ({count}) => ({ 
+    type: 'SET', 
+    count
+});
+
+const store = createStore((state = { count:0}, action) => {
     switch (action.type) {
         case 'INCREMENT':
-            const incrementBy = typeof action.incrementBy === 'number' ? action.incrementBy : 1;
-            return {
-                count: state.count + incrementBy
+           return {
+                count: state.count + action.incrementBy
         };
         case 'DECREMENT':
-            const decrementBy = typeof action.decrementBy === 'number' ? action.decrementBy : 1;
             return {
-                count: state.count - decrementBy
-            };
+                count: state.count - action.decrementBy
+        };
         case 'SET':
             return {
                 count:action.count
@@ -33,34 +53,20 @@ const unsubscribe =store.subscribe(() => {
 //Actions ! object to get sent to the store
 //increment, decrement,reset
 
-store.dispatch({
-    type: 'INCREMENT',
-    incrementBy:5
-});
+store.dispatch(incrementCount({ incrementBy: 5 }))
+
+store.dispatch(incrementCount());
 
 //unsubscribe();
 
-store.dispatch({
-    type: 'INCREMENT'
-});
+store.dispatch(decrementCount());
 
-store.dispatch({
-    type: 'RESET'
-});
+store.dispatch(resetCount());
 
-store.dispatch({
-    type: 'DECREMENT'
+store.dispatch(decrementCount());
+
+store.dispatch(decrementCount({decrementBy: 10}));
+
+store.dispatch(setCount({count:101}));
     
-});
-
-store.dispatch({
-    type: 'DECREMENT',
-    decrementBy:10
-});
-
-store.dispatch({
-    type: 'SET',
-    count:101
-});
-
 
