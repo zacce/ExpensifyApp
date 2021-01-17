@@ -1,9 +1,5 @@
 import { firebase, googleAuthProvider } from '../firebase/firebase';
 
-var provider = new firebase.auth.GoogleAuthProvider();
-provider.addScope('profile');
-provider.addScope('email');
-
 export const login = (uid) => ({
   type: 'LOGIN',
   uid
@@ -11,7 +7,7 @@ export const login = (uid) => ({
 
 export const startLogin = () => {
   return () => {
-    return firebase.auth().signInWithPopup(provider);
+    return firebase.auth().signInWithPopup(googleAuthProvider);
   };
 };
 
